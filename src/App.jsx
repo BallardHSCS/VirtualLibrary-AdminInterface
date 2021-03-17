@@ -3,7 +3,6 @@ import TextContentForm from "./TextContentForm";
 
 import Container from "@material-ui/core/Container";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import MUIRichTextEditor from "mui-rte";
 import { Button } from "@material-ui/core";
 
 const defaultTheme = createMuiTheme({
