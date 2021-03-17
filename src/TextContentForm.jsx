@@ -23,6 +23,18 @@ const useStyles = makeStyles({
   },
 });
 
+const visibleControls = [
+  "bold",
+  "italic",
+  "bulletList",
+  "numberList",
+  "quote",
+  "clear",
+  "undo",
+  "redo",
+  "link",
+];
+
 /** Text entry fields, ie. posters, info panels, etc. */
 function TextContentForm() {
   const classes = useStyles();
@@ -34,31 +46,31 @@ function TextContentForm() {
         <FormControl className={classes.formControl}>
           <h3 htmlFor="Makerspace-Info">Makerspace Info Panel</h3>
           <MUIRichTextEditor
-            controls={["bold", "italic"]}
+            controls={visibleControls}
             id="Makerspace-Info"
             label="Click here and start typing..."
           />
           <h3 htmlFor="Printing-Info">Printing Station Info Panel</h3>
           <MUIRichTextEditor
-            controls={["bold", "italic"]}
+            controls={visibleControls}
             id="Printing-Info"
             label="Click here and start typing..."
           />
           <h3 htmlFor="Bookshelf-Info">Bookshelf Info Panel</h3>
           <MUIRichTextEditor
-            controls={["bold", "italic"]}
+            controls={visibleControls}
             id="Bookshelf-Info"
             label="Click here and start typing..."
           />
           <h3 htmlFor="Games-Info">Board Games Info Panel</h3>
           <MUIRichTextEditor
-            controls={["bold", "italic"]}
+            controls={visibleControls}
             id="Games-Info"
             label="Click here and start typing..."
           />
           <h3 htmlFor="Film-Info">Film Room Info Panel</h3>
           <MUIRichTextEditor
-            controls={["bold", "italic"]}
+            controls={visibleControls}
             id="Film-Info"
             label="Click here and start typing..."
           />
@@ -69,13 +81,13 @@ function TextContentForm() {
         <FormControl className={classes.formControl}>
           <h3 htmlFor="Whiteboard01">Whiteboard by bookshelves</h3>
           <MUIRichTextEditor
-            controls={["bold", "italic"]}
+            controls={visibleControls}
             id="Whiteboard01"
             label="Click here and start typing..."
           />
           <h3 htmlFor="ProjectorScreen01">Wall projector screen</h3>
           <MUIRichTextEditor
-            controls={["bold", "italic"]}
+            controls={visibleControls}
             id="ProjectorScreen01"
             label="Click here and start typing..."
           />

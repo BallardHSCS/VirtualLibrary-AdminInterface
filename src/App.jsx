@@ -9,6 +9,12 @@ import { Button } from "@material-ui/core";
 const defaultTheme = createMuiTheme({
   palette: {
     type: "dark",
+    primary: {
+      main: "#f44336",
+    },
+    secondary: {
+      main: "#fff",
+    },
   },
 });
 
@@ -23,6 +29,9 @@ Object.assign(defaultTheme, {
       },
       editor: {
         borderBottom: "3px solid gray",
+      },
+      toolbar: {
+        paddingBottom: "20px",
       },
     },
   },
