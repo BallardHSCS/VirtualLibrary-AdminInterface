@@ -18,8 +18,6 @@ const visibleControls = [
   "italic",
   "bulletList",
   "numberList",
-  "quote",
-  "clear",
   "undo",
   "redo",
   "link",
