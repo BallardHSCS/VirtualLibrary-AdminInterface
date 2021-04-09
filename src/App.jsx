@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import TextContentForm from "./TextContentForm";
+import PATModal from "./PATModal";
 
-import Container from "@material-ui/core/Container";
+import { Container } from "@material-ui/core";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+
+import { Octokit } from "@octokit/rest";
+
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Dialog from "@material-ui/core/Dialog";
+
+var octokit;
 
 const defaultTheme = createMuiTheme({
   palette: {
@@ -40,22 +50,78 @@ var config = {};
 
 function App() {
   const [data, setData] = useState();
+  const [loginSuccess, setLoginSuccess] = useState();
 
-  useEffect(() => {
-    fetch(process.env.REACT_APP_CONFIG_URL, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    }).then(function (res) {
-      res.json().then((data) => {
-        config = data;
-        console.log(config);
-        console.log("done!");
-        setData([config]);
-      });
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [PAT, setPAT] = React.useState("");
+  const onChangePAT = (event) => {
+    setPAT(event.target.value);
+  };
+
+  const onLogin = async (event) => {
+    octokit = new Octokit({
+      auth: PAT,
     });
-  }, []);
+
+    try {
+      octokit.rest.repos
+        .getContent({
+          owner: "BallardHSCS",
+          repo: "VirtualLibrary-AdminInterface",
+          path: "config/config.json",
+        })
+        .then((fileInfo) => {
+          var actual = JSON.parse(atob(fileInfo.data.content));
+          config = actual;
+          console.log(config);
+          console.log("done!");
+          setData([config]);
+        });
+
+      setLoginSuccess(true);
+    } catch {
+      setLoginSuccess(false);
+    }
+  };
+
+  const onConfigSubmit = async (newConfig) => {
+    var fileSha = "";
+
+    octokit.rest.repos
+      .getContent({
+        owner: "BallardHSCS",
+        repo: "VirtualLibrary-AdminInterface",
+        path: "config/config.json",
+      })
+      .then((fileInfo) => {
+        fileSha = fileInfo.data.sha;
+        console.log(fileInfo);
+
+        let newConfigJSON = JSON.stringify(newConfig);
+        console.log(newConfigJSON);
+        octokit.rest.repos.createOrUpdateFileContents({
+          owner: "BallardHSCS",
+          repo: "VirtualLibrary-AdminInterface",
+          path: "config/config.json",
+          sha: fileSha,
+          message: "Config update from admin interface",
+          content: Buffer.from(newConfigJSON).toString("base64"),
+          "committer.name": "Admin Interface",
+          "committer.email": "nlaha@outlook.com",
+          "author.name": "Admin Interface",
+          "author.email": "nlaha@outlook.com",
+        });
+      });
+  };
 
   return (
     <div className="App">
@@ -63,9 +129,16 @@ function App() {
         <Container className="centerform">
           <h1 className="title">BHS Virtual Library</h1>
           <h2 className="subtitle">Admin Interface</h2>
-          {data && <TextContentForm IncomingConfig={config} />}
+          {!loginSuccess && (
+            <PATModal PAT={PAT} onChangePAT={onChangePAT} onLogin={onLogin} />
+          )}
+          {data && loginSuccess && (
+            <TextContentForm
+              IncomingConfig={config}
+              onConfigSubmit={(e, newConfig) => onConfigSubmit(e, newConfig)}
+            />
+          )}
         </Container>
-
         <footer>
           <p>
             Copyright &copy;{" "}

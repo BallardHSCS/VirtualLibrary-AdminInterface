@@ -40,7 +40,7 @@ function TextContentForm(props) {
   };
 
   const upload = (state) => {
-    console.log(IncomingConfig);
+    props.onConfigSubmit(IncomingConfig);
   };
 
   return (
