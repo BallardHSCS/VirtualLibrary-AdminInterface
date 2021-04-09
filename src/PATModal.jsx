@@ -19,7 +19,27 @@ function PATModal(props) {
 
   return (
     <Card className={classes.root}>
+      <h1>Please follow the steps below</h1>
+      <h2>1. Visit the GitHub PAT generation page</h2>
+      <a
+        target="_blank"
+        href="https://github.com/settings/tokens"
+        style={{ textDecoration: "none" }}
+      >
+        <Button variant="contained" color="secondary">
+          GitHub PAT Generation Page
+        </Button>
+      </a>
+      <h2>2. Click "generate new token"</h2>
+      <img src="Step1.jpg"></img>
+      <h2>3. Set up the token as shown below</h2>
+      <img src="Step2.jpg"></img>
+      <h2>
+        Copy the token to a safe place, you won't be able to copy it again
+      </h2>
+      <img src="Step3.jpg"></img>
       <h2>Please enter your GitHub Personal Access Token</h2>
+
       <div>
         <TextField
           style={{ width: "80%" }}

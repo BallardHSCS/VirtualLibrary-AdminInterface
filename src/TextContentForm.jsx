@@ -46,6 +46,21 @@ function TextContentForm(props) {
   return (
     <div>
       <Card className={classes.root}>
+        <h2>Account</h2>
+        <h3>Signed in as {props.GithubUsername}</h3>
+        <Button
+          variant="contained"
+          className="submitbtn"
+          onClick={() => {
+            localStorage.setItem("PAT", "");
+            window.location.reload();
+          }}
+          style={{ width: "50%" }}
+        >
+          Clear Stored Token & Sign Out
+        </Button>
+      </Card>
+      <Card className={classes.root}>
         <h2>Info Panels</h2>
         <FormControl className={classes.formControl}>
           <h3 htmlFor="Makerspace-Info">Makerspace Info Panel</h3>

@@ -47,6 +47,7 @@ Object.assign(defaultTheme, {
 });
 
 var config = {};
+var username = "";
 
 function App() {
   const [data, setData] = useState();
@@ -67,10 +68,25 @@ function App() {
     setPAT(event.target.value);
   };
 
+  useEffect(() => {
+    let SavedPAT = localStorage.getItem("PAT");
+    if (SavedPAT !== "" && SavedPAT !== undefined) {
+      console.log(SavedPAT);
+      onLogin(SavedPAT);
+    }
+  }, []);
+
   const onLogin = async (event) => {
-    octokit = new Octokit({
-      auth: PAT,
-    });
+    if (event.type === undefined) {
+      console.log(event);
+      octokit = new Octokit({
+        auth: event,
+      });
+    } else {
+      octokit = new Octokit({
+        auth: PAT,
+      });
+    }
 
     try {
       octokit.rest.repos
@@ -87,7 +103,13 @@ function App() {
           setData([config]);
         });
 
-      setLoginSuccess(true);
+      if (event.type !== undefined) {
+        localStorage.setItem("PAT", PAT);
+      }
+      octokit.rest.users.getAuthenticated().then((user) => {
+        username = user.data.login;
+        setLoginSuccess(true);
+      });
     } catch {
       setLoginSuccess(false);
     }
@@ -134,6 +156,7 @@ function App() {
           )}
           {data && loginSuccess && (
             <TextContentForm
+              GithubUsername={username}
               IncomingConfig={config}
               onConfigSubmit={(e, newConfig) => onConfigSubmit(e, newConfig)}
             />
