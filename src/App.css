@@ -24,9 +24,34 @@ html {
   width: 100%;
 }
 
+.isbn-input {
+  margin: 10px !important;
+  width: 80%;
+}
+
+.book-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto auto;
+}
+
+.book {
+  margin: 10px;
+  display: block;
+  min-width: 40%;
+  padding: 15px;
+  background-color: #353535 !important;
+}
+
 footer {
   padding: 50px;
   color: #fff;
+}
+
+.inline-container {
+  width: 100%;
+  align-items: center;
+  display: flex;
 }
 
 .App {
