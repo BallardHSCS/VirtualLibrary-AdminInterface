@@ -115,31 +115,6 @@ function TextContentForm(props) {
           />
         </FormControl>
       </Card>
-      <Card className={classes.root}>
-        <h2>Display Objects</h2>
-        <FormControl className={classes.formControl}>
-          <h3 htmlFor="Whiteboard01">Whiteboard by bookshelves</h3>
-          <MUIRichTextEditor
-            defaultValue={IncomingConfig["Whiteboard01"]}
-            controls={visibleControls}
-            id="Whiteboard01"
-            label="Click here and start typing..."
-            onChange={(state) => {
-              change(state, "Whiteboard01");
-            }}
-          />
-          <h3 htmlFor="ProjectorScreen01">Wall projector screen</h3>
-          <MUIRichTextEditor
-            defaultValue={IncomingConfig["ProjectorScreen01"]}
-            controls={visibleControls}
-            id="ProjectorScreen01"
-            label="Click here and start typing..."
-            onChange={(state) => {
-              change(state, "ProjectorScreen01");
-            }}
-          />
-        </FormControl>
-      </Card>
       <Button
         variant="contained"
         color="primary"
